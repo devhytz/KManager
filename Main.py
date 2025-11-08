@@ -1,7 +1,11 @@
 from km.models.User import User
 from km.models.Book import Book
+from km.models.Manager import Manager
 from km.controllers.UserController import UserController
 from km.controllers.BookController import BookController
+
+import datetime
+
 
 user_controller = UserController()
 book_controller = BookController()
@@ -24,4 +28,6 @@ firstBook = Book("0123456789", "Holahola", "Alejandro", 40000, 1.3)
 # book_controller.list_books() FUNCIONANDO EXCELENTE
 # book_controller.update_book(firstBook) FUNCIONANDO EXCELENTE
 
-user_controller.update_user(firstUser)
+firstManager = Manager(datetime.datetime.now(), datetime.datetime.now(), firstUser, firstBook)
+
+firstManager.showManager()

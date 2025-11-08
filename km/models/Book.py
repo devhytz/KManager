@@ -84,5 +84,9 @@ class Book:
         else:
             raise ValueError("Weight must be between 0.001 (LB) and 8(KG)")
         
-    
-    
+    def showBook(self):
+        print(f"ISBN: {self.isbn}")
+        print(f"Title: {self.title}")
+        print(f"Autor: {self.autor}")
+        print(f"Value: {self.value}")
+        print(f"Weight: {self.weight}")

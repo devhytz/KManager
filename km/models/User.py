@@ -84,4 +84,8 @@ class User:
         else:
             raise ValueError("Password must contain letters and numbers")
 
-        
+    def showUser(self):
+        print(f"Document: {self.document}")
+        print(f"Name: {self.name}")
+        print(f"Mail: {self.mail}")
+        print(f"")
