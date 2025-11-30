@@ -9,7 +9,6 @@ class User:
         document: str,  len > 0 and < 11.
         name: str, len > 0 and < 51.
         mail: str, must contains "@" format.
-        password: str, len > 8 and < 21
         
     Meths:
         object.getAttribute() -> returns attribute.
@@ -68,24 +67,15 @@ class User:
         else:
             raise ValueError("Mail must contain @ in the format")
         
-    # Methods to access, comprobation of a valid password and set it
-    
-    def getPassword(self):
-        return self.password
-    
-    def validPass(self, password):
-        hasLetters = any(char.isalpha() for char in password)
-        hasNumbers = any(char.isdigit() for char in password)
-        return hasLetters and hasNumbers
-
-    def setPassword(self, password):
-        if self.validPass(password):
-            self.password = password
-        else:
-            raise ValueError("Password must contain letters and numbers")
 
     def showUser(self):
         print(f"Document: {self.document}")
         print(f"Name: {self.name}")
         print(f"Mail: {self.mail}")
         print(f"")
+        
+    def __str__(self):
+        return f"{self.name} {self.document}"
+
+      
+

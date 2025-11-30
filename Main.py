@@ -15,6 +15,7 @@ secondUser = User("30338037", "Paulas", "paulita@gmail.com", "paulka13")
 tirhtUser = User("74080282", "Orlando", "orlando@gmail.com", "orlando123")
 
 firstBook = Book("0123456789", "Holahola", "Alejandro", 40000, 1.3)
+secondBook = Book("987654321", "AdiosAdios", "Sergey", 2000, 7.3)
 
 # controller.searching(secondUser) X
 # controller.add_user(tirhtUser) FUNCIONANDO EXCELENTE
@@ -28,6 +29,9 @@ firstBook = Book("0123456789", "Holahola", "Alejandro", 40000, 1.3)
 # book_controller.list_books() FUNCIONANDO EXCELENTE
 # book_controller.update_book(firstBook) FUNCIONANDO EXCELENTE
 
-firstManager = Manager(datetime.datetime.now(), datetime.datetime.now(), firstUser, firstBook)
+#book_controller.add_book(firstBook)
+book_controller.delete_book("0123456789")
 
-firstManager.showManager()
+#book_controller.delete_book("987654321")#
+
+book_controller.search_book("1")

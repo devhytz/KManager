@@ -13,6 +13,8 @@ class BookController:
             return True
         else:
             # Lista vacia
+            print("File does not exist... creating.")
+            
             create = []
             
             with open("data/books.json", "w") as file:
@@ -22,16 +24,16 @@ class BookController:
     # ----------------------------------- CRUD --------------------------
     #"data/books.json" - Ruta archivo books.json
     
-    def searching(self, book):
+    def searching(self, isbn):
         # Lista en la cual se guardará el contenido del archivo
         list_books = []
             
         with open("data/books.json", "r") as file:
             list_books = json.load(file)
             
-        # Recorrer la lista e identificar el documento de cada usuario para compararlo
-        for b in list_books:
-            if b['isbn'] == book.isbn:
+        # Recorrer la lista e identificar el ISBN de cada libro
+        for book in list_books:
+            if book['isbn'] == isbn:
                 return True
               
                 
@@ -49,7 +51,7 @@ class BookController:
                 format = {
                     "isbn" : new_book.isbn,
                     "title" : new_book.title,
-                    "autor" : new_book.autor,
+                    "author" : new_book.author,
                     "value" : new_book.value,
                     "weight" : new_book.weight
                     
@@ -64,23 +66,33 @@ class BookController:
                 
                 print(f"{format['title']} added")     
             else:
-                return print(f"Error, {new_book.name} already exists.")
-        else:
-            return print("File does not exist... creating.")
+                return print(f"Error, {new_book.title} already exists.")
         
              
     def search_book(self, isbn):
-        # Traemos la informacion a la lista vacia
-        list_books = []
         
-        with open("data/books.json", "r") as file:
-            list_books = json.load(file)
-            
-            for b in list_books:
-                if b['isbn'] == isbn:
-                    print(f"The book with ISBN code {b['isbn']} exists")
-                    return True
-            
+        if self.verify_file():
+            if self.searching(isbn):
+                # Traemos la informacion a la lista vacia
+                list_books = []
+                
+                with open("data/books.json", "r") as file:
+                    list_books = json.load(file)
+                    
+                    for b in list_books:
+                        if b['isbn'] == isbn:
+                            print("This book already exists: ")
+                            print("")
+                            print(f"ISBN: {b['isbn']}")
+                            print(f"Title: {b['title']}")
+                            print(f"author: {b['author']}")
+                            print(f"Value: {b['value']}")
+                            print(f"Weight: {b['weight']}")
+                        return True
+            else:
+                return print(f"The book with ISBN code: {isbn} does not exists.")
+                        
+        
    
     def list_books(self):
         if self.verify_file():
@@ -95,12 +107,11 @@ class BookController:
                 print("")
                 print(f"ISBN: {book['isbn']}")
                 print(f"Title: {book['title']}")
-                print(f"Autor: {book['autor']}")
+                print(f"author: {book['author']}")
                 print(f"Value: {book['value']}")
                 print(f"Weight: {book['weight']}")
                 print("")
-        else:
-            return print("File does not exist... creating.")
+        
         
     
     
@@ -117,10 +128,10 @@ class BookController:
             for b in list_books:
                 if b['isbn'] == book.isbn:
                     
-                    # Preguntamos que dato(s) se desean actualizar
+                    # Preguntamos que dato/s se desean actualizar
                     print("1) To change ISBN code")
                     print("2) To change title")
-                    print("3) To change autor")
+                    print("3) To change author")
                     print("4) To change value")
                     print("5) To change weight")
                     print("6) To change all")
@@ -136,9 +147,9 @@ class BookController:
                             b['title'] = new_title
                             print(f"{b['title']} updated")
                         case 3:
-                            new_autor = input("Introduce the new autor name: ")
-                            b['autor'] = new_autor
-                            print(f"{b['autor']} updated")
+                            new_author = input("Introduce the new author name: ")
+                            b['author'] = new_author
+                            print(f"{b['author']} updated")
                         case 4:
                             new_value = input("Introduce the new value: ")
                             b['value'] = new_value
@@ -156,9 +167,9 @@ class BookController:
                             b['title'] = new_title
                             print(f"{b['title']} updated")
                             
-                            new_autor = input("Introduce the new autor name: ")
-                            b['autor'] = new_autor
-                            print(f"{b['autor']} updated")
+                            new_author = input("Introduce the new author name: ")
+                            b['author'] = new_author
+                            print(f"{b['author']} updated")
                             
                             new_value = input("Introduce the new value: ")
                             b['value'] = new_value
@@ -183,4 +194,28 @@ class BookController:
                     break
                 
         else:
-            return print(f"{book.name} does not exist")   
+            return print(f"{book.name} does not exist") 
+    
+    def delete_book(self, isbn):
+        if self.verify_file():
+        
+                list_books = []
+                
+                with open("data/books.json", "r") as file:
+                    list_books = json.load(file)
+                
+                new_list = []
+                
+                for book in list_books:
+                    if book['isbn'] != isbn:
+                        new_list.append(book)
+                
+                with open("data/books.json", "w") as file:
+                    json.dump(new_list, file, indent=4)
+                    
+                return print(f"The book with ISBN code: {isbn} was deleted")
+            
+                
+            
+            
+            
