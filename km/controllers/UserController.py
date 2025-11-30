@@ -6,7 +6,7 @@ class UserController:
     """ DOC NO YET
     """
     
-    # ------------------------ Auxiliar Methods -------------------------
+    
     def verify_file(self):
         route = Path("data/users.json")
         
