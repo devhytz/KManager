@@ -218,3 +218,52 @@ class BookController:
                     json.dump(new_list, file, indent=4)
                     
                 return print(f"The book with ISBN code: {isbn} was deleted")
+            
+            
+    #----------- METODOS PEDIDOS 
+    
+    #ORDENAR LIBROS POR ORDEN ASCENDENTE DE ISBN
+    
+    def order_books(self):
+        # Rutas de los archivos
+        archivo_origen = Path("data/books.json")
+        archivo_destino = Path("data/booksordered.json")
+        
+        # 1. Verificamos que exista el archivo ORIGINAL para poder leerlo
+        if not archivo_origen.is_file():
+            print("Error: No existe el archivo de libros original para leer.")
+            return
+        
+        # 2. Cargamos la lista de libros original
+        list_books = []
+        with open("data/books.json", "r") as file:
+            list_books = json.load(file)
+
+        # Si la lista está vacía, no hacemos nada
+        if len(list_books) == 0:
+            print("No hay libros para ordenar.")
+            return
+
+        # 3. ALGORITMO DE BURBUJA (Ordenamos la lista en memoria)
+        cantidad = len(list_books)
+        
+        for i in range(cantidad):
+            for j in range(0, cantidad - i - 1):
+                
+                # Comparamos si el ISBN actual es mayor al siguiente
+                if list_books[j]['isbn'] > list_books[j+1]['isbn']:
+                    
+                    # Intercambio (Swap)
+                    temporal = list_books[j]
+                    list_books[j] = list_books[j+1]
+                    list_books[j+1] = temporal
+
+        # 4. GUARDAMOS EN EL NUEVO ARCHIVO (booksordered.json)
+        # El modo "w" crea el archivo automáticamente si no existe
+        with open("data/booksordered.json", "w") as file:
+            json.dump(list_books, file, indent=4)
+            
+        print("Éxito: Se ha creado el archivo 'booksordered.json' con los libros ordenados.")
+        
+            
+        

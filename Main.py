@@ -1,6 +1,5 @@
 from km.models.User import User
 from km.models.Book import Book
-from km.models.Manager import Manager
 from km.controllers.UserController import UserController
 from km.controllers.BookController import BookController
 
@@ -16,6 +15,7 @@ tirhtUser = User("74080282", "Orlando", "orlando@gmail.com", "orlando123")
 
 firstBook = Book("0123456789", "Holahola", "Alejandro", 40000, 1.3)
 secondBook = Book("987654321", "AdiosAdios", "Sergey", 2000, 7.3)
+tirhtBook = Book("53943934", "HEHGEY", "Chan", 23, 8.4)
 
 # controller.searching(secondUser) X
 # controller.add_user(tirhtUser) FUNCIONANDO EXCELENTE
@@ -37,5 +37,9 @@ secondBook = Book("987654321", "AdiosAdios", "Sergey", 2000, 7.3)
 #book_controller.search_book("1")
 #user_controller.add_user(firstUser)
 #user_controller.search_user("1054862574")
-user_controller.update_user(firstUser)
+#user_controller.update_user(firstUser)
+
+#book_controller.delete_book("0123456789")
+book_controller.add_book(tirhtBook)
+book_controller.order_books()
 
