@@ -40,7 +40,8 @@ class BookController:
     def add_book(self, new_book):
         # Verificar si existe el archivo
         if self.verify_file():
-            if not self.searching(new_book):
+            isbn = new_book.isbn
+            if not self.searching(isbn):
                 list_books = []
                 
                 # Traer informacion desde el archivo hasta una variable
@@ -85,7 +86,7 @@ class BookController:
                             print("")
                             print(f"ISBN: {b['isbn']}")
                             print(f"Title: {b['title']}")
-                            print(f"author: {b['author']}")
+                            print(f"Author: {b['author']}")
                             print(f"Value: {b['value']}")
                             print(f"Weight: {b['weight']}")
                         return True
@@ -107,7 +108,7 @@ class BookController:
                 print("")
                 print(f"ISBN: {book['isbn']}")
                 print(f"Title: {book['title']}")
-                print(f"author: {book['author']}")
+                print(f"Author: {book['author']}")
                 print(f"Value: {book['value']}")
                 print(f"Weight: {book['weight']}")
                 print("")
@@ -116,15 +117,18 @@ class BookController:
     
     
     def update_book(self, book):
-        # Lista en la cual traemos la informacion
-        list_books = []
+        # Verificamos si el libro realmente existe en el archivo
         
-        # Verificamos si el usuario realmente existe en el archivo
-        if self.searching(book):
+        
+        if self.searching(book.isbn):
+            
+            # Lista en la cual traemos la informacion
+            list_books = []
+            
             with open("data/books.json", "r") as file:
                 list_books = json.load(file)
             
-            # Recorremos hasta encontrar el usuario
+            # Recorremos hasta encontrar el libro
             for b in list_books:
                 if b['isbn'] == book.isbn:
                     
@@ -194,7 +198,7 @@ class BookController:
                     break
                 
         else:
-            return print(f"{book.name} does not exist") 
+            return print(f"{book.title} does not exist") 
     
     def delete_book(self, isbn):
         if self.verify_file():
@@ -214,8 +218,3 @@ class BookController:
                     json.dump(new_list, file, indent=4)
                     
                 return print(f"The book with ISBN code: {isbn} was deleted")
-            
-                
-            
-            
-            

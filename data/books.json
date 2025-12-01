@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "isbn": "0123456789",
+        "title": "Holahola",
+        "author": "Alejandro",
+        "value": 40000,
+        "weight": 1.3
+    }
+]

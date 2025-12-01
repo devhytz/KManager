@@ -10,7 +10,7 @@ import datetime
 user_controller = UserController()
 book_controller = BookController()
 
-firstUser = User("1054862574", "Alejandro", "alejrios90@gmail.com", "alejo123")
+firstUser = User("1054862574", "Alejandro", "alejo70665@gmail.com", "alejo123")
 secondUser = User("30338037", "Paulas", "paulita@gmail.com", "paulka13")
 tirhtUser = User("74080282", "Orlando", "orlando@gmail.com", "orlando123")
 
@@ -29,9 +29,13 @@ secondBook = Book("987654321", "AdiosAdios", "Sergey", 2000, 7.3)
 # book_controller.list_books() FUNCIONANDO EXCELENTE
 # book_controller.update_book(firstBook) FUNCIONANDO EXCELENTE
 
-#book_controller.add_book(firstBook)
-book_controller.delete_book("0123456789")
+#book_controller.add_book(secondBook)
+#book_controller.delete_book("0123456789")
 
-#book_controller.delete_book("987654321")#
+#book_controller.delete_book("8748484")#
 
-book_controller.search_book("1")
+#book_controller.search_book("1")
+#user_controller.add_user(firstUser)
+#user_controller.search_user("1054862574")
+user_controller.update_user(firstUser)
+

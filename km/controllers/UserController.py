@@ -6,7 +6,7 @@ class UserController:
     """ DOC NO YET
     """
     
-    
+    # ------------------------ Auxiliar Methods -------------------------
     def verify_file(self):
         route = Path("data/users.json")
         
@@ -14,6 +14,7 @@ class UserController:
             return True
         else:
             # Lista vacia
+            print("File does not exist... creating.")
             create = []
             
             with open("data/users.json", "w") as file:
@@ -22,8 +23,7 @@ class UserController:
     # ----------------------------------- CRUD --------------------------
     #"data/users.json" - Ruta archivo users.json
     
-    
-    def searching(self, user):
+    def searching(self, document):
 
         # Lista en la cual se guardará el contenido del archivo
         user_list = []
@@ -32,15 +32,16 @@ class UserController:
             user_list = json.load(file)
             
         # Recorrer la lista e identificar el documento de cada usuario para compararlo
-        for u in user_list:
-            if u['document'] == user.document:
+        for user in user_list:
+            if user['document'] == document:
                 return True
                      
                 
     def add_user(self, new_user):
         # Verificar si existe el archivo
         if self.verify_file():
-            if not self.searching(new_user):
+            if not self.searching(new_user.document):
+                
                 list_users = []
                 
                 # Traer informacion desde el archivo hasta una variable
@@ -64,105 +65,136 @@ class UserController:
                 print(f"{format['name']} added")     
             else:
                 return print(f"Error, {new_user.name} already exists.")
-        else:
-            return print("File does not exist... creating.")
+
         
              
     def search_user(self, document):
         
         if self.verify_file():
-            # Traemos la informacion a la lista vacia
+            if self.searching(document):
+                # Traemos la informacion a la lista vacia
+                
+                list_users = []
+                
+                with open("data/users.json", "r") as file:
+                    list_users = json.load(file)
+                    
+                    for user in list_users:
+                        if user['document'] == document:
+                            print(f"This user already exists")
+                            print("")
+                            print(f"Document: {user['document']}")
+                            print(f"Name: {user['name']}")
+                            print(f"Mail: {user['mail']}")
+                        return True
+            else:
+                return print(f"The user with document: {document} does not exists")
+        
+            
+   
+    def list_users(self):
+        if self.verify_file():
+        
             list_users = []
             
             with open("data/users.json", "r") as file:
                 list_users = json.load(file)
                 
-                for u in list_users:
-                    if u['document'] == document:
-                        print(f"The user with document {u['document']} exists")
-                        return True
-        else:
-            return print("File does not exist... creating.")
-            
-   
-    def list_users(self):
-        list_users = []
+            for user in list_users:
+                
+                # Imprime cada atributo para que se vea ordenado y los espacios por legibilidad
+                print("")
+                print(f"Document: {user['document']}")
+                print(f"Name: {user['name']}")
+                print(f"Mail: {user['mail']}")
+                print("")
         
-        with open("data/users.json", "r") as file:
-            list_users = json.load(file)
-            
-        for user in list_users:
-            
-            # Imprime cada atributo para que se vea ordenado y los espacios por legibilidad
-            print("")
-            print(f"Document: {user['document']}")
-            print(f"Name: {user['name']}")
-            print(f"Mail: {user['mail']}")
-            print("")
-    
     
     def update_user(self, user):
-        if self.verify_file():
+        # Verificamos si el usuario realmente existe en el archivo
+        
+        
+        if self.searching(user.document):
+            
             # Lista en la cual traemos la informacion
             list_users = []
             
-            # Verificamos si el usuario realmente existe en el archivo
-            if self.searching(user):
+            with open("data/users.json", "r") as file:
+                list_users = json.load(file)
+            
+            # Recorremos hasta encontrar el libro
+            for u in list_users:
+                if u['document'] == user.document:
+                    
+                    # Preguntamos que dato/s se desean actualizar
+                    print("1) To change document")
+                    print("2) To change name")
+                    print("3) To change mail")
+                    print("4) To change all")
+                    option = int(input("Select an option: "))
+                    
+                    match option:
+                        case 1:
+                            new_document = input("Introduce the new document: ")
+                            u['document'] = new_document
+                            print(f"{u['document']} updated")
+                        case 2:
+                            new_name = input("Introduce the new name: ")
+                            u['name'] = new_name
+                            print(f"{u['name']} updated")
+                        case 3:
+                            new_mail = input("Introduce the new mail: ")
+                            u['mail'] = new_mail
+                            print(f"{u['mail']} updated")
+                        case 4:
+                            new_document = input("Introduce the new document: ")
+                            u['document'] = new_document
+                            print(f"{u['document']} updated")
+                            
+                            new_name = input("Introduce the new name: ")
+                            u['name'] = new_name
+                            print(f"{u['name']} updated")
+                            
+                            new_mail = input("Introduce the new mail: ")
+                            u['mail'] = new_mail
+                            print(f"{u['mail']} updated")
+                            
+                            print("")
+                            print("Success")
+                            print("")
+                            
+                        case _:
+                            print("Invalid option")
+                
+                    # Enviamos la lista actualizada al archivo
+                    with open("data/users.json", "w") as file:
+                        json.dump(list_users, file, indent=4)
+                    
+                        
+                    break
+                
+        else:
+            return print(f"{user.name} does not exist")
+            
+    
+    def delete_user(self, document):
+        if self.verify_file():
+        
+                list_users = []
+                
                 with open("data/users.json", "r") as file:
                     list_users = json.load(file)
                 
-                # Recorremos hasta encontrar el usuario
-                for u in list_users:
-                    if u['document'] == user.document:
-                        
-                        # Preguntamos que dato(s) se desean actualizar
-                        option = int(input("1) To change document | 2) To change name | 3) To change mail | 4) To change all: "))
-                        
-                        match option:
-                            case 1:
-                                new_document = input("Introduce the new document number: ")
-                                u['document'] = new_document
-                                print(f"{u['document']} updated")
-                            case 2:
-                                new_name = input("Introduce the new name: ")
-                                u['name'] = self.setName(new_name)
-                                print(f"{u['name']} updated")
-                            case 3:
-                                new_mail = input("Introduce the new mail: ")
-                                u['mail'] = new_mail
-                                print(f"{u['mail']} updated")
-                            case 4:
-                                new_document = input("Introduce the new document number: ")
-                                u['document'] = new_document
-                                print(f"{u['document']} updated")
-                                
-                                new_name = input("Introduce the new name: ")
-                                u['name'] = new_name
-                                print(f"{u['name']} updated")
-                                
-                                new_mail = input("Introduce the new mail: ")
-                                u['mail'] = new_mail
-                                print(f"{u['mail']} updated")
-                                
-                                print("")
-                                print("Success")
-                                print("")
-                                
-                            case _:
-                                print("Invalid option")
+                new_list = []
+                
+                for user in list_users:
+                    if user['document'] != document:
+                        new_list.append(user)
+                
+                with open("data/users.json", "w") as file:
+                    json.dump(new_list, file, indent=4)
                     
-                        # Enviamos la lista actualizada al archivo
-                        with open("data/users.json", "w") as file:
-                            json.dump(list_users, file, indent=4)
-                        break
-            else:
-                return print(f"{user.name} does not exist")     
-        else:
-            return print("File does not exist... creating.")                   
-                        
-            
-    
-            
+                return print(f"The user with the document: {document} was deleted")
     
        
         
