@@ -37,37 +37,70 @@ class BookController:
                 return True
               
                 
+    def order_book(self, list_books, new_book_dict):
+        
+        isbn_new = new_book_dict['isbn']
+        inserted = False
+        
+        for i in range(len(list_books)):
+            # Comparamos el ISBN nuevo con el de la lista
+            if isbn_new < list_books[i]['isbn']:
+                list_books.insert(i, new_book_dict)
+                inserted = True
+                break
+        
+        # Si es mayor que todos, va al final
+        if not inserted:
+            list_books.append(new_book_dict)
+            
+        return list_books
+
     def add_book(self, new_book):
-        # Verificar si existe el archivo
+        # 1. Verificar el archivo principal (el método que ya tienes)
         if self.verify_file():
-            isbn = new_book.isbn
-            if not self.searching(isbn):
-                list_books = []
+        
+            # 2. Verificar el archivo ordenado (lo hacemos aquí para no tocar verify_file)
+            route_ordered = Path("data/books_ordered.json")
+            if not route_ordered.is_file():
+                with open(route_ordered, "w") as file:
+                    ordered_list = []
+                    json.dump(ordered_list, file, indent=4)
+
+            # 3. Validar duplicados usando tu método searching existente
+            if self.searching(new_book.isbn):
+                return print(f"The Book with ISBN {new_book.isbn} already exists.")
                 
-                # Traer informacion desde el archivo hasta una variable
-                with open("data/books.json", "r") as file:
-                    list_books = json.load(file)
-                    
-                # Pasarlo a formato json
-                format = {
-                    "isbn" : new_book.isbn,
-                    "title" : new_book.title,
-                    "author" : new_book.author,
-                    "value" : new_book.value,
-                    "weight" : new_book.weight
-                    
-                }
+            # Creamos el diccionario del libro
+            format_book = {
+                "isbn": new_book.isbn,
+                "title": new_book.title,
+                "author": new_book.author,
+                "value": new_book.value,
+                "weight": new_book.weight
+            }
+            
+            # --- PROCESO A: Inventario General (Append) ---
+            list_general = []
+            with open("data/books.json", "r") as file:
+                list_general = json.load(file)
                 
-                # Meter el nuevo usuario en la lista
-                list_books.append(format)
+            list_general.append(format_book)
+            
+            with open("data/books.json", "w") as file:
+                json.dump(list_general, file, indent=4)
                 
-                # Pasar la nueva lista con el usuario añadido al archivo
-                with open("data/books.json", "w") as file:
-                    json.dump(list_books, file, indent=4)  
+            # --- PROCESO B: Inventario Ordenado (Insertion Sort) ---
+            list_ordered = []
+            with open(route_ordered, "r") as file:
+                list_ordered = json.load(file)
                 
-                print(f"{format['title']} added")     
-            else:
-                return print(f"Error, {new_book.title} already exists.")
+            # Usamos el algoritmo de inserción
+            self.order_book(list_ordered, format_book)
+            
+            with open(route_ordered, "w") as file:
+                json.dump(list_ordered, file, indent=4)  
+            
+            return print(f"Book '{new_book.title}' added success.")
         
              
     def search_book(self, isbn):
@@ -220,50 +253,6 @@ class BookController:
                 return print(f"The book with ISBN code: {isbn} was deleted")
             
             
-    #----------- METODOS PEDIDOS 
-    
-    #ORDENAR LIBROS POR ORDEN ASCENDENTE DE ISBN
-    
-    def order_books(self):
-        # Rutas de los archivos
-        archivo_origen = Path("data/books.json")
-        archivo_destino = Path("data/booksordered.json")
-        
-        # 1. Verificamos que exista el archivo ORIGINAL para poder leerlo
-        if not archivo_origen.is_file():
-            print("Error: No existe el archivo de libros original para leer.")
-            return
-        
-        # 2. Cargamos la lista de libros original
-        list_books = []
-        with open("data/books.json", "r") as file:
-            list_books = json.load(file)
-
-        # Si la lista está vacía, no hacemos nada
-        if len(list_books) == 0:
-            print("No hay libros para ordenar.")
-            return
-
-        # 3. ALGORITMO DE BURBUJA (Ordenamos la lista en memoria)
-        cantidad = len(list_books)
-        
-        for i in range(cantidad):
-            for j in range(0, cantidad - i - 1):
-                
-                # Comparamos si el ISBN actual es mayor al siguiente
-                if list_books[j]['isbn'] > list_books[j+1]['isbn']:
-                    
-                    # Intercambio (Swap)
-                    temporal = list_books[j]
-                    list_books[j] = list_books[j+1]
-                    list_books[j+1] = temporal
-
-        # 4. GUARDAMOS EN EL NUEVO ARCHIVO (booksordered.json)
-        # El modo "w" crea el archivo automáticamente si no existe
-        with open("data/booksordered.json", "w") as file:
-            json.dump(list_books, file, indent=4)
-            
-        print("Éxito: Se ha creado el archivo 'booksordered.json' con los libros ordenados.")
-        
+   
             
         

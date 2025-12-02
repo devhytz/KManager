@@ -20,37 +20,37 @@ class Book:
     """
     
     isbn = "Unknow"
-    title = "Unknow"      
-    author = "Unknow"    
+    title = "Unknow" 
+    author = "Unknow" 
     value = 0
     weight = 0.0
     
-
+    # Methods to access and set of isbn attribute
     
-    def getIsbn(self):      
+    def getIsbn(self): 
         return self.isbn
     
     def setIsbn(self, isbn):
-        if str.isdigit(isbn):
-            if len(isbn) == 10: 
-                self.isbn = isbn
-            else:
-                raise ValueError("ISBN must be exactly 10 digits")
+        if len(isbn) > 0 and len(isbn) < 14 and str.isdigit(isbn): 
+            self.isbn = isbn 
         else:
-            raise TypeError("ISBN must be numbers")
+            if str.isdigit(isbn) == False:
+                raise TypeError("ISBN must be numbers")
+            if len(isbn) < 1 or len(isbn) > 13:
+                raise ValueError("ISBN must be between 1 and 13 digits")
         
-        
+    # Methods to access and set of title attribute
     
     def getTitle(self):
         return self.title
     
     def setTitle(self, title):
-        if len(title) > 0 and len(title) < 100:    
-            self.title = title          
+        if len(title) > 0 and len(title) < 100:
+            self.title = title
         else:
             raise ValueError("Title must be between 1 and 100 characters")
-        
-        
+    
+    # Methods to access and set of author attribute
     
     def getAuthor(self):
         return self.author
@@ -61,7 +61,7 @@ class Book:
         else:
             raise ValueError("Author name must be between 1 and 50 characters")
         
-        
+    # Methods to access and set of value attribute 
     
     def getValue(self):
         return self.value
@@ -75,13 +75,14 @@ class Book:
                 raise ValueError("Value must be a positive number")
         except ValueError:
              raise TypeError("Value must be a number")
-         
 
+    # Methods to access and set of weight attribute
 
     def getWeight(self):
         return self.weight
 
     def setWeight(self, weight):
+        # We verify if is float for kilograms
         try:
             weight = float(weight)
             if weight > 0:
@@ -91,7 +92,13 @@ class Book:
         except ValueError:
             raise TypeError("Weight must be a number (float)")
     
-    def __init__(self, isbn, title, author, value, weight):    
+    
+    def __init__(self, isbn, title, author, value, weight):  
+        
+        # ⚠️ MODIFICACIÓN APLICADA AQUÍ ⚠️
+        # Se eliminaron las asignaciones directas y solo se usan los setters.
+        
+        # We call the setters to validate data inside the constructor
         self.setIsbn(isbn)
         self.setTitle(title)
         self.setAuthor(author)
@@ -99,6 +106,7 @@ class Book:
         self.setWeight(weight)
         
     
+
     def showBook(self):
         print(f"ISBN: {self.isbn}")
         print(f"Title: {self.title}")
@@ -106,7 +114,6 @@ class Book:
         print(f"Value: ${self.value}")
         print(f"Weight: {self.weight} Kg")
         print(f"")
-        
         
     def __str__(self):
         return f"{self.title} - {self.author}"

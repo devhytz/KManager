@@ -7,11 +7,46 @@
         "weight": 1.3
     },
     {
-        "isbn": "987654321",
-        "title": "AdiosAdios",
-        "author": "Sergey",
-        "value": 2000,
-        "weight": 7.3
+        "isbn": "12313",
+        "title": "Pepe",
+        "author": "Nadie",
+        "value": 5000,
+        "weight": 3400.0
+    },
+    {
+        "isbn": "1412",
+        "title": "Pepe",
+        "author": "Nadie",
+        "value": 5000,
+        "weight": 3400.0
+    },
+    {
+        "isbn": "211",
+        "title": "Pepe",
+        "author": "Nadie",
+        "value": 5000,
+        "weight": 3400.0
+    },
+    {
+        "isbn": "300",
+        "title": "Pepe",
+        "author": "Nadie",
+        "value": 5000,
+        "weight": 3400.0
+    },
+    {
+        "isbn": "333112",
+        "title": "Pepe",
+        "author": "Nadie",
+        "value": 5000,
+        "weight": 3400.0
+    },
+    {
+        "isbn": "3434343",
+        "title": "Pepe",
+        "author": "Nadie",
+        "value": 5000,
+        "weight": 3400.0
     },
     {
         "isbn": "53943934",
@@ -35,45 +70,10 @@
         "weight": 3400.0
     },
     {
-        "isbn": "300",
-        "title": "Pepe",
-        "author": "Nadie",
-        "value": 5000,
-        "weight": 3400.0
-    },
-    {
-        "isbn": "211",
-        "title": "Pepe",
-        "author": "Nadie",
-        "value": 5000,
-        "weight": 3400.0
-    },
-    {
-        "isbn": "12313",
-        "title": "Pepe",
-        "author": "Nadie",
-        "value": 5000,
-        "weight": 3400.0
-    },
-    {
-        "isbn": "1412",
-        "title": "Pepe",
-        "author": "Nadie",
-        "value": 5000,
-        "weight": 3400.0
-    },
-    {
-        "isbn": "3434343",
-        "title": "Pepe",
-        "author": "Nadie",
-        "value": 5000,
-        "weight": 3400.0
-    },
-    {
-        "isbn": "333112",
-        "title": "Pepe",
-        "author": "Nadie",
-        "value": 5000,
-        "weight": 3400.0
+        "isbn": "987654321",
+        "title": "AdiosAdios",
+        "author": "Sergey",
+        "value": 2000,
+        "weight": 7.3
     }
 ]

@@ -13,9 +13,6 @@ firstUser = User("1054862574", "Alejandro", "alejo70665@gmail.com", "alejo123")
 secondUser = User("30338037", "Paulas", "paulita@gmail.com", "paulka13")
 tirhtUser = User("74080282", "Orlando", "orlando@gmail.com", "orlando123")
 
-firstBook = Book("0123456789", "Holahola", "Alejandro", 40000, 1.3)
-secondBook = Book("987654321", "AdiosAdios", "Sergey", 2000, 7.3)
-tirhtBook = Book("53943934", "HEHGEY", "Chan", 23, 8.4)
 
 # controller.searching(secondUser) X
 # controller.add_user(tirhtUser) FUNCIONANDO EXCELENTE
@@ -40,6 +37,8 @@ tirhtBook = Book("53943934", "HEHGEY", "Chan", 23, 8.4)
 #user_controller.update_user(firstUser)
 
 #book_controller.delete_book("0123456789")
-book_controller.add_book(tirhtBook)
-book_controller.order_books()
+
+
+nuevo = Book("9876543210", "sdadsa", "asdasd", 232 ,3400)
+book_controller.add_book(nuevo)
 
