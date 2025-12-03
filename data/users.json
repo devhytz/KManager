@@ -2,6 +2,30 @@
     {
         "document": "1054862574",
         "name": "Alejandro",
-        "mail": "alejo70665@gmail.com"
+        "mail": "alejo70665@gmail.com",
+        "history": [
+            {
+                "isbn": "0123456789",
+                "document": "1054862574",
+                "date": "2025-12-02 18:35:57"
+            }
+        ]
+    },
+    {
+        "document": "30338037",
+        "name": "Paulas",
+        "mail": "paulita@gmail.com",
+        "history": [
+            {
+                "isbn": "0123456789",
+                "document": "30338037",
+                "date": "2025-12-02 18:31:57"
+            },
+            {
+                "isbn": "0123456789",
+                "document": "30338037",
+                "date": "2025-12-02 18:34:58"
+            }
+        ]
     }
 ]

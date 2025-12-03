@@ -11,6 +11,7 @@ class Book:
         author: str, len > 0 and < 51.
         value: int, must be > 0 (COP currency).
         weight: float, must be > 0 (Kg).
+        stock: int
         
     Meths:
         object.getAttribute() -> returns attribute.
@@ -24,6 +25,7 @@ class Book:
     author = "Unknow"    
     value = 0
     weight = 0.0
+    stock = 0
     
 
     
@@ -91,12 +93,14 @@ class Book:
         except ValueError:
             raise TypeError("Weight must be a number (float)")
     
-    def __init__(self, isbn, title, author, value, weight):    
+    def __init__(self, isbn, title, author, value, weight, stock):    
         self.setIsbn(isbn)
         self.setTitle(title)
         self.setAuthor(author)
         self.setValue(value)
         self.setWeight(weight)
+        self.stock = stock
+        self.reservations = []
         
     
     def showBook(self):

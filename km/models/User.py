@@ -20,13 +20,12 @@ class User:
     document = "Unknow"
     name = "Unknow"      # This values are for default
     mail = "Unknow"    
-    password = "Unknow"
     
-    def __init__(self, document, name, mail, password):     # Constructor method to create an instance
+    def __init__(self, document, name, mail):     # Constructor method to create an instance
         self.document = document
         self.name = name                 # This variables assigns the value to the instance
         self.mail = mail
-        self.password = password
+        self.history = []
         
     # Methods to access and set of document attribute
     
@@ -49,7 +48,7 @@ class User:
     
     def setName(self, name):
         if len(name) > 0 and len(name) < 51 and str.isdigit(name):    # Conditional to assign
-            self.document = name            # Updates the value
+            self.name = name            # Updates the value
         else:
             if str.isalpha(name) == False:      # Verify error type and throw the message for it
                 raise TypeError("Name must be letters without space")

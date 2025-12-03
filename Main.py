@@ -2,16 +2,18 @@ from km.models.User import User
 from km.models.Book import Book
 from km.controllers.UserController import UserController
 from km.controllers.BookController import BookController
+from km.controllers.LoanController import LoanController
 
 import datetime
 
 
 user_controller = UserController()
 book_controller = BookController()
+loan_controller = LoanController()
 
-firstUser = User("1054862574", "Alejandro", "alejo70665@gmail.com", "alejo123")
-secondUser = User("30338037", "Paulas", "paulita@gmail.com", "paulka13")
-tirhtUser = User("74080282", "Orlando", "orlando@gmail.com", "orlando123")
+firstUser = User("1054862574", "Alejandro", "alejo70665@gmail.com")
+secondUser = User("30338037", "Paulas", "paulita@gmail.com")
+
 
 
 # controller.searching(secondUser) X
@@ -32,13 +34,18 @@ tirhtUser = User("74080282", "Orlando", "orlando@gmail.com", "orlando123")
 #book_controller.delete_book("8748484")#
 
 #book_controller.search_book("1")
-#user_controller.add_user(firstUser)
+#user_controller.add_user(secondUser)
 #user_controller.search_user("1054862574")
 #user_controller.update_user(firstUser)
 
 #book_controller.delete_book("0123456789")
 
 
-nuevo = Book("9876543210", "sdadsa", "asdasd", 232 ,3400)
-book_controller.add_book(nuevo)
 
+#nuevo = Book("0123456789", "La Odisea", "Homero", 70000, 3, 1)
+#otro = Book("1111111111", "La Biblia", "San Juan", 9000, 8, 1)
+#book_controller.add_book(nuevo)
+#loan_controller.loan("0123456789", "1054862574")
+#loan_controller.return_book("0123456789")
+
+book_controller.value_report()

@@ -76,7 +76,9 @@ class BookController:
                 "title": new_book.title,
                 "author": new_book.author,
                 "value": new_book.value,
-                "weight": new_book.weight
+                "weight": new_book.weight,
+                "stock": new_book.stock,
+                "reservations": []
             }
             
             # --- PROCESO A: Inventario General (Append) ---
@@ -122,6 +124,8 @@ class BookController:
                             print(f"Author: {b['author']}")
                             print(f"Value: {b['value']}")
                             print(f"Weight: {b['weight']}")
+                            print(f"Stock: {b['stock']}")
+                            print(f"reservations: {b['reservations']}")
                         return True
             else:
                 return print(f"The book with ISBN code: {isbn} does not exists.")
@@ -251,6 +255,63 @@ class BookController:
                     json.dump(new_list, file, indent=4)
                     
                 return print(f"The book with ISBN code: {isbn} was deleted")
+            
+        
+    #------------METODOS EXIGIDOS POR PROYECTO
+    
+    def merge_sort(self, list):
+        
+        if len(list) <= 1:
+            return list
+        
+        middle = len(list) // 2
+        left = list[:middle]
+        right = list[middle:]
+        
+        order_left = self.merge_sort(left)
+        order_right = self.merge_sort(right)
+        
+        return self.merge(order_left, order_right)
+    
+    def merge(self, order_left, order_right):
+        
+        order_list = []
+        
+        i = 0
+        j= 0
+        
+        while i < len(order_left) and j < len(order_right):
+            
+            if order_left[i]['value'] < order_right[j]['value']:
+                order_list.append(order_left[i])
+                i += 1
+            else:
+                
+                order_list.append(order_right[j])
+                j += 1
+        
+        while i < len(order_left):
+            order_list.append(order_left[i])
+            i=+ 1
+            
+        while j < len(order_right):
+            order_list.append(order_right[j])
+            j += 1
+        
+        return order_list
+    
+    def value_report(self):
+        
+        list_books = []
+        
+        with open("data/books.json", "r") as file:
+            list_books = json.load(file)
+            
+        report = self.merge_sort(list_books)
+        
+        with open("data/value_report.json", "w") as file:
+            json.dump(list_books, file, indent=4)
+                
             
             
    

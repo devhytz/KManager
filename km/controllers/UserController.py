@@ -52,7 +52,8 @@ class UserController:
                 format = {
                     "document" : new_user.document,
                     "name" : new_user.name,
-                    "mail" : new_user.mail
+                    "mail" : new_user.mail,
+                    "history" : []
                 }
                 
                 # Meter el nuevo usuario en la lista
@@ -86,6 +87,7 @@ class UserController:
                             print(f"Document: {user['document']}")
                             print(f"Name: {user['name']}")
                             print(f"Mail: {user['mail']}")
+                            print(f"History: {user['history']}")
                         return True
             else:
                 return print(f"The user with document: {document} does not exists")
