@@ -3,12 +3,11 @@ class User:
     This class represents an common virtual user with some attributes and actions.
     
     Initializer: 
-        variable = User(document, name, mail, password).
+        variable = User(document, name).
 
     Atr: 
         document: str,  len > 0 and < 11.
         name: str, len > 0 and < 51.
-        mail: str, must contains "@" format.
         
     Meths:
         object.getAttribute() -> returns attribute.
@@ -16,61 +15,48 @@ class User:
         object.showUser() -> shows all attributes.
         
     """
+    # Atributtes for default 
     
     document = "Unknow"
-    name = "Unknow"      # This values are for default
+    name = "Unknow"      
     mail = "Unknow"    
     
-    def __init__(self, document, name, mail):     # Constructor method to create an instance
+    def __init__(self, document, name):    # Constructor to make instances
         self.document = document
-        self.name = name                 # This variables assigns the value to the instance
-        self.mail = mail
-        self.history = []
-        
-    # Methods to access and set of document attribute
+        self.name = name                 
+        self.history = []   # List to save the history of loans 
     
-    def getDocument(self):      # Access to the name of the instance and return it
+    # Methods to get and set attributes
+    
+    def getDocument(self):     
         return self.document
     
     def setDocument(self, document):
-        if len(document) > 0 and len(document) < 11 and str.isdigit(document):    # Conditional to assign
-            self.document = document            # Updates the value
+        if len(document) > 0 and len(document) < 11 and str.isdigit(document): 
+            self.document = document            
         else:
-            if str.isdigit(document) == False:      # Verify error type and throw the message for it
-                raise TypeError("Document must be numbers.")
+            if str.isdigit(document) == False:      
+                raise TypeError("Document must be numbers.") # Document can´t be digits in Colombia
             if len(document) < 1 or len(document) > 10:
-                raise ValueError("Document must be between 1 and 10 digits")
+                raise ValueError("Document must be between 1 and 10 digits") # Length average in Colombia
         
-    # Methods to access and set of name attribute
     
     def getName(self):
         return self.name
     
     def setName(self, name):
-        if len(name) > 0 and len(name) < 51 and str.isdigit(name):    # Conditional to assign
-            self.name = name            # Updates the value
+        if len(name) > 0 and len(name) < 51 and str.isdigit(name):    
+            self.name = name           
         else:
-            if str.isalpha(name) == False:      # Verify error type and throw the message for it
-                raise TypeError("Name must be letters without space")
+            if str.isalpha(name) == False:      
+                raise TypeError("Name must be letters without space") # Name only can be digits
             if len(name) < 1 or len(name) > 51:
                 raise ValueError("Name must be between 1 and 51 digits")
     
-    # Methods to access and set of mail attribute
-    
-    def getMail(self):
-        return self.mail
-    
-    def setMail(self, mail):
-        if "@" in mail:
-            self.mail = mail
-        else:
-            raise ValueError("Mail must contain @ in the format")
-        
-
+   
     def showUser(self):
         print(f"Document: {self.document}")
         print(f"Name: {self.name}")
-        print(f"Mail: {self.mail}")
         print(f"")
         
     def __str__(self):

@@ -1,30 +1,112 @@
 [
     {
-        "document": "1054862574",
-        "name": "Alejandro",
-        "mail": "alejo70665@gmail.com",
-        "history": [
-            {
-                "isbn": "0123456789",
-                "document": "1054862574",
-                "date": "2025-12-02 18:35:57"
-            }
-        ]
+        "document": "1053829001",
+        "name": "Juan Camilo Perez",
+        "history": []
     },
     {
-        "document": "30338037",
-        "name": "Paulas",
-        "mail": "paulita@gmail.com",
+        "document": "75102938",
+        "name": "Maria Fernanda Rodriguez",
+        "history": []
+    },
+    {
+        "document": "1002938475",
+        "name": "Carlos Andres Gomez",
+        "history": []
+    },
+    {
+        "document": "24391827",
+        "name": "Ana Lucia Torres",
+        "history": []
+    },
+    {
+        "document": "98712345",
+        "name": "Jorge Ivan Martinez",
+        "history": []
+    },
+    {
+        "document": "1059871234",
+        "name": "Laura Sofia Ramirez",
+        "history": []
+    },
+    {
+        "document": "1010203040",
+        "name": "Diego Alejandro Fernandez",
+        "history": []
+    },
+    {
+        "document": "30291827",
+        "name": "Sofia Vergara",
+        "history": []
+    },
+    {
+        "document": "89012345",
+        "name": "Andres Felipe Lopez",
+        "history": []
+    },
+    {
+        "document": "1001001001",
+        "name": "Camila Vargas",
+        "history": []
+    },
+    {
+        "document": "1122334455",
+        "name": "Alejandro Ruiz",
+        "history": []
+    },
+    {
+        "document": "99887766",
+        "name": "Valentina Castro",
+        "history": []
+    },
+    {
+        "document": "123123123",
+        "name": "Felipe Rios",
+        "history": []
+    },
+    {
+        "document": "87654321",
+        "name": "Daniela Salazar",
+        "history": []
+    },
+    {
+        "document": "55667788",
+        "name": "Mateo Jaramillo",
+        "history": []
+    },
+    {
+        "document": "33445566",
+        "name": "Valeria Henao",
+        "history": []
+    },
+    {
+        "document": "77112233",
+        "name": "Santiago Restrepo",
+        "history": []
+    },
+    {
+        "document": "44556677",
+        "name": "Isabella Londo\u00c3\u00b1o",
+        "history": []
+    },
+    {
+        "document": "1020304050",
+        "name": "Nicolas Otalvaro",
+        "history": []
+    },
+    {
+        "document": "15975346",
+        "name": "Mariana Duque",
+        "history": []
+    },
+    {
+        "document": "105486265",
+        "name": "Alejandro Rios",
         "history": [
             {
-                "isbn": "0123456789",
-                "document": "30338037",
-                "date": "2025-12-02 18:31:57"
-            },
-            {
-                "isbn": "0123456789",
-                "document": "30338037",
-                "date": "2025-12-02 18:34:58"
+                "isbn": "9588931580",
+                "document": "105486265",
+                "date": "2025-12-03 01:02:17"
             }
         ]
     }

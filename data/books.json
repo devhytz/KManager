@@ -1,20 +1,182 @@
 [
     {
-        "isbn": "1111111111",
-        "title": "La Biblia",
-        "author": "San Juan",
-        "value": 9000,
-        "weight": 8.0,
+        "isbn": "9584258169",
+        "title": "Cien a\u00c3\u00b1os de soledad (Edici\u00c3\u00b3n Lujo)",
+        "author": "Gabriel Garcia Marquez",
+        "value": 65000,
+        "weight": 0.8,
+        "stock": 10,
+        "reservations": []
+    },
+    {
+        "isbn": "0307387264",
+        "title": "Cronica de una muerte anunciada",
+        "author": "Gabriel Garcia Marquez",
+        "value": 42000,
+        "weight": 0.5,
+        "stock": 5,
+        "reservations": []
+    },
+    {
+        "isbn": "1400034680",
+        "title": "Vivir para contarla",
+        "author": "Gabriel Garcia Marquez",
+        "value": 85000,
+        "weight": 1.2,
+        "stock": 3,
+        "reservations": []
+    },
+    {
+        "isbn": "8478884459",
+        "title": "Harry Potter y la piedra filosofal",
+        "author": "J.K. Rowling",
+        "value": 55000,
+        "weight": 0.6,
+        "stock": 12,
+        "reservations": []
+    },
+    {
+        "isbn": "0545162076",
+        "title": "Harry Potter Box Set (Colecci\u00c3\u00b3n Completa)",
+        "author": "J.K. Rowling",
+        "value": 450000,
+        "weight": 7.5,
         "stock": 1,
         "reservations": []
     },
     {
-        "isbn": "0123456789",
-        "title": "La Odisea",
-        "author": "Homero",
-        "value": 70000,
-        "weight": 3.0,
-        "stock": 0,
+        "isbn": "8498380201",
+        "title": "Harry Potter y las reliquias de la muerte",
+        "author": "J.K. Rowling",
+        "value": 89000,
+        "weight": 1.1,
+        "stock": 6,
+        "reservations": []
+    },
+    {
+        "isbn": "6071511378",
+        "title": "Medicina Interna de Harrison (Tomo \u00c3\u0161nico)",
+        "author": "J. Larry Jameson",
+        "value": 680000,
+        "weight": 6.8,
+        "stock": 2,
+        "reservations": []
+    },
+    {
+        "isbn": "6073244393",
+        "title": "Fisica Universitaria Sears-Zemansky",
+        "author": "Sears y Zemansky",
+        "value": 240000,
+        "weight": 3.2,
+        "stock": 4,
+        "reservations": []
+    },
+    {
+        "isbn": "6075265509",
+        "title": "Calculo de una variable",
+        "author": "James Stewart",
+        "value": 195000,
+        "weight": 2.8,
+        "stock": 8,
+        "reservations": []
+    },
+    {
+        "isbn": "8420412146",
+        "title": "Don Quijote de la Mancha (RAE)",
+        "author": "Miguel de Cervantes",
+        "value": 95000,
+        "weight": 2.1,
+        "stock": 5,
+        "reservations": []
+    },
+    {
+        "isbn": "9584276963",
+        "title": "El olvido que seremos",
+        "author": "Hector Abad Faciolince",
+        "value": 49000,
+        "weight": 0.5,
+        "stock": 10,
+        "reservations": []
+    },
+    {
+        "isbn": "9584295444",
+        "title": "El infinito en un junco",
+        "author": "Irene Vallejo",
+        "value": 72000,
+        "weight": 0.9,
+        "stock": 7,
+        "reservations": []
+    },
+    {
+        "isbn": "8445000667",
+        "title": "El Se\u00c3\u00b1or de los Anillos (Ilustrado)",
+        "author": "J.R.R. Tolkien",
+        "value": 210000,
+        "weight": 3.5,
+        "stock": 3,
+        "reservations": []
+    },
+    {
+        "isbn": "9588931580",
+        "title": "Constitucion Politica de Colombia",
+        "author": "Legis",
+        "value": 120000,
+        "weight": 1.8,
+        "stock": 16,
+        "reservations": []
+    },
+    {
+        "isbn": "0307743659",
+        "title": "It (Eso)",
+        "author": "Stephen King",
+        "value": 98000,
+        "weight": 1.6,
+        "stock": 4,
+        "reservations": []
+    },
+    {
+        "isbn": "8499926223",
+        "title": "Sapiens: De animales a dioses",
+        "author": "Yuval Noah Harari",
+        "value": 62000,
+        "weight": 0.7,
+        "stock": 9,
+        "reservations": []
+    },
+    {
+        "isbn": "8416714207",
+        "title": "La Historia del Arte",
+        "author": "E.H. Gombrich",
+        "value": 280000,
+        "weight": 4.5,
+        "stock": 2,
+        "reservations": []
+    },
+    {
+        "isbn": "9584222225",
+        "title": "Satanas",
+        "author": "Mario Mendoza",
+        "value": 38000,
+        "weight": 0.5,
+        "stock": 6,
+        "reservations": []
+    },
+    {
+        "isbn": "1524763138",
+        "title": "Becoming (Mi Historia)",
+        "author": "Michelle Obama",
+        "value": 85000,
+        "weight": 1.0,
+        "stock": 5,
+        "reservations": []
+    },
+    {
+        "isbn": "9587588251",
+        "title": "Codigo Penal Colombiano",
+        "author": "Leyer",
+        "value": 150000,
+        "weight": 2.5,
+        "stock": 8,
         "reservations": []
     }
 ]

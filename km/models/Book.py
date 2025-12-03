@@ -19,6 +19,7 @@ class Book:
         object.showBook() -> shows all attributes.
         
     """
+    # Attributes for default
     
     isbn = "Unknow"
     title = "Unknow"      
@@ -27,7 +28,7 @@ class Book:
     weight = 0.0
     stock = 0
     
-
+    # Getters and setters method for the attributes
     
     def getIsbn(self):      
         return self.isbn
@@ -37,48 +38,41 @@ class Book:
             if len(isbn) == 10: 
                 self.isbn = isbn
             else:
-                raise ValueError("ISBN must be exactly 10 digits")
+                raise ValueError("ISBN must be exactly 10 digits") # The ISBN of the books are 10 digits
         else:
-            raise TypeError("ISBN must be numbers")
+            raise TypeError("ISBN must be numbers") # An ISBN code must be of numbers
         
         
-    
     def getTitle(self):
         return self.title
     
     def setTitle(self, title):
-        if len(title) > 0 and len(title) < 100:    
+        if len(title) > 0 and len(title) < 100:   # Title can´t be blank
             self.title = title          
         else:
             raise ValueError("Title must be between 1 and 100 characters")
         
         
-    
     def getAuthor(self):
         return self.author
     
     def setAuthor(self, author):
-        if len(author) > 0 and len(author) < 51:
+        if len(author) > 0 and len(author) < 51: # Author´s name its neccesary to assign on the object
             self.author = author
         else:
             raise ValueError("Author name must be between 1 and 50 characters")
         
         
-    
     def getValue(self):
         return self.value
     
     def setValue(self, value):
-        try:
-            value = int(value)
-            if value > 0:
+        value = int(value)
+        if value > 0:
                 self.value = value
-            else:
-                raise ValueError("Value must be a positive number")
-        except ValueError:
-             raise TypeError("Value must be a number")
-         
-
+        else:
+            raise ValueError("Value must be a positive number") # Number > 0 
+      
 
     def getWeight(self):
         return self.weight
@@ -91,16 +85,16 @@ class Book:
             else:
                 raise ValueError("Weight must be greater than 0")
         except ValueError:
-            raise TypeError("Weight must be a number (float)")
+            raise TypeError("Weight must be a number (float)") # Float to representate Kg format
     
-    def __init__(self, isbn, title, author, value, weight, stock):    
-        self.setIsbn(isbn)
+    def __init__(self, isbn, title, author, value, weight, stock):  # Constructor for the instances
+        self.setIsbn(isbn)  # To validate the attributes of the new object
         self.setTitle(title)
         self.setAuthor(author)
         self.setValue(value)
         self.setWeight(weight)
         self.stock = stock
-        self.reservations = []
+        self.reservations = [] # List where it contains registers of reservations
         
     
     def showBook(self):
