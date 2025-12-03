@@ -1,5 +1,14 @@
 [
     {
+        "isbn": "0000000000",
+        "title": "Prueba",
+        "author": "Alejandro",
+        "value": 20000,
+        "weight": 4.0,
+        "stock": 10,
+        "reservations": []
+    },
+    {
         "isbn": "0307387264",
         "title": "Cronica de una muerte anunciada",
         "author": "Gabriel Garcia Marquez",
@@ -45,6 +54,15 @@
         "reservations": []
     },
     {
+        "isbn": "3452835469",
+        "title": "SDads",
+        "author": "sdsd",
+        "value": 50000,
+        "weight": 433.0,
+        "stock": 2,
+        "reservations": []
+    },
+    {
         "isbn": "6071511378",
         "title": "Medicina Interna de Harrison (Tomo \u00c3\u0161nico)",
         "author": "J. Larry Jameson",
@@ -69,6 +87,15 @@
         "value": 195000,
         "weight": 2.8,
         "stock": 8,
+        "reservations": []
+    },
+    {
+        "isbn": "6453645378",
+        "title": "La Odisea",
+        "author": "Homero",
+        "value": 43333,
+        "weight": 3.0,
+        "stock": 4,
         "reservations": []
     },
     {
@@ -168,7 +195,9 @@
         "value": 150000,
         "weight": 2.5,
         "stock": 8,
-        "reservations": []
+        "reservations": [
+            "105486265"
+        ]
     },
     {
         "isbn": "9588931580",
@@ -176,7 +205,7 @@
         "author": "Legis",
         "value": 120000,
         "weight": 1.8,
-        "stock": 16,
+        "stock": 20,
         "reservations": []
     }
 ]

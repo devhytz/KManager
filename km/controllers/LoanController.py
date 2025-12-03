@@ -28,11 +28,11 @@ class LoanController:
         (unless already inside).
 
         Args:
-            isbn (str): ISBN code of the book being borrowed.
-            document (str): Document ID of the user borrowing the book.
+            ISBN code of the book being borrowed.
+            Document ID of the user borrowing the book.
 
-        Returns:
-            None
+        Returns: None
+            
         """
         list_books = []
         
@@ -118,19 +118,17 @@ class LoanController:
                 - users.json
                 - books.json
 
-        Args:
-            isbn (str): ISBN code of the book being returned.
-
-        Returns:
-            None
+        Args: ISBN code of the book being returned.
+            
+        Returns: None
+            
         """
         
         list_ordered = []
-        try:
-            with open("data/books_ordered.json", "r") as file:
-                list_ordered = json.load(file)
-        except FileNotFoundError:
-            return print("No existe el archivo ordenado. Agrega libros primero.")
+        
+        with open("data/books_ordered.json", "r") as file:
+            list_ordered = json.load(file)
+        
 
         # Load users
         list_users = []
@@ -154,11 +152,11 @@ class LoanController:
                 high = mid - 1
         
         if found_book is None:
-            return print(f"El libro con ISBN {isbn} no se encuentra en el sistema.")
+            return print(f"The book with ISBN code: {isbn} does not exists")
 
 
         if len(found_book['reservations']) > 0:
-            print("Hay reservas pendientes. Asignando al siguiente...")
+            print("The book has reservations at this moment")
             
             next_user_doc = found_book['reservations'].pop(0)
 
@@ -180,10 +178,10 @@ class LoanController:
                 }
                 
                 found_user['history'].append(loan_data)
-                print(f"Libro asignado automáticamente a: {found_user['name']}")
+                print(f"Book loaned to: {found_user['name']}")
         
         else:
-            print("No hay reservas. El libro regresa al inventario.")
+            print("No reservations")
             found_book['stock'] += 1
 
         
@@ -208,4 +206,4 @@ class LoanController:
         with open("data/books.json", "w") as file:
             json.dump(list_normal, file, indent=4)
             
-        print("Devolución procesada y archivos actualizados.")     
+        print("Booked returned")     

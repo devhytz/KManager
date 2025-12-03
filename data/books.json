@@ -122,7 +122,7 @@
         "author": "Legis",
         "value": 120000,
         "weight": 1.8,
-        "stock": 16,
+        "stock": 20,
         "reservations": []
     },
     {
@@ -176,7 +176,36 @@
         "author": "Leyer",
         "value": 150000,
         "weight": 2.5,
-        "stock": 8,
+        "stock": 0,
+        "reservations": [
+            "105486265"
+        ]
+    },
+    {
+        "isbn": "0000000000",
+        "title": "Prueba",
+        "author": "Alejandro",
+        "value": 20000,
+        "weight": 4.0,
+        "stock": 10,
+        "reservations": []
+    },
+    {
+        "isbn": "6453645378",
+        "title": "La Odisea",
+        "author": "Homero",
+        "value": 43333,
+        "weight": 3.0,
+        "stock": 4,
+        "reservations": []
+    },
+    {
+        "isbn": "3452835469",
+        "title": "SDads",
+        "author": "sdsd",
+        "value": 50000,
+        "weight": 433.0,
+        "stock": 2,
         "reservations": []
     }
 ]

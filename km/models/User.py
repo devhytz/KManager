@@ -18,8 +18,7 @@ class User:
     # Atributtes for default 
     
     document = "Unknow"
-    name = "Unknow"      
-    mail = "Unknow"    
+    name = "Unknow"        
     
     def __init__(self, document, name):    # Constructor to make instances
         self.document = document

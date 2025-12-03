@@ -97,7 +97,13 @@
     {
         "document": "15975346",
         "name": "Mariana Duque",
-        "history": []
+        "history": [
+            {
+                "isbn": "9588931580",
+                "document": "15975346",
+                "date": "2025-12-03 07:12:03"
+            }
+        ]
     },
     {
         "document": "105486265",
@@ -109,5 +115,15 @@
                 "date": "2025-12-03 01:02:17"
             }
         ]
+    },
+    {
+        "document": "999999",
+        "name": "Jorge Jaramillo",
+        "history": []
+    },
+    {
+        "document": "123414",
+        "name": "Juan",
+        "history": []
     }
 ]

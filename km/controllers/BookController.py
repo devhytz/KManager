@@ -18,67 +18,74 @@ class BookController:
     
     def verify_file(self):
         """
-        Verifies that the books.json file exists.  
+        Verifies that the books.json file exists. 
         If it does not exist, the method automatically creates it.
 
-        Returns:
-            bool: True if the file exists or after creating it.
+        Returns: True if the file exists or after creating it.
         """
+        # Define the path to the file
         route = Path("data/books.json")
         
+        # Check if the file exists
         if route.is_file():
             return True
         else:
+            # If it doesn't exist, print a message and create it with an empty list
             print("File does not exist... creating.")
-            create = []
+            empty_list = []
             with open("data/books.json", "w") as file:
-                json.dump(create, file, indent=4)
+                json.dump(empty_list, file, indent=4) # Create the file with JSON format
 
     
     def searching(self, isbn):
         """
-        Performs a linear search in books.json to determine if a book exists.
+        Performs a linear search in books.json to check if a book exists.
 
-        Args:
-            isbn (str): ISBN code to search for.
-
-        Returns:
-            bool: True if the book exists, False otherwise.
-        """
-        list_books = []
-        with open("data/books.json", "r") as file:
-            list_books = json.load(file)
+        Args: isbn (str): ISBN code to search for.
             
-        for book in list_books:
-            if book['isbn'] == isbn:
-                return True
-              
-                
-    def order_book(self, list_books, new_book_dict):
+        Returns: bool: True if the book exists, False otherwise.
         """
-        Inserts a book into an already ordered list using an insertion-sort approach.
-        Books are ordered by their ISBN field.
+        book_list = []
+        # Load the list of books from the JSON file
+        with open("data/books.json", "r") as file:
+            book_list = json.load(file)
+            
+        # Iterate over the list to find an ISBN match
+        for book in book_list:
+            if book['isbn'] == isbn:
+                return True # Return True if the ISBN is found
+            
+        return False # Return False if the loop finishes without finding it
+        
+    
+    def order_book(self, book_list, new_book_dict):
+        """
+        Inserts a book into an already ordered list using an insertion approach.
+        Books are ordered by their ISBN field (Insertion Sort method).
 
         Args:
-            list_books (list): Existing ordered list.
+            book_list (list): Existing ordered list.
             new_book_dict (dict): New book to insert.
 
         Returns:
             list: Updated ordered list.
         """
-        isbn_new = new_book_dict['isbn']
+        new_isbn = new_book_dict['isbn']
         inserted = False
         
-        for i in range(len(list_books)):
-            if isbn_new < list_books[i]['isbn']:
-                list_books.insert(i, new_book_dict)
+        # Iterate to find the correct insertion position
+        for i in range(len(book_list)):
+            # If the new ISBN is smaller than the current ISBN, insert it here
+            if new_isbn < book_list[i]['isbn']:
+                book_list.insert(i, new_book_dict)
                 inserted = True
                 break
         
+        # If it was not inserted (it's the largest ISBN), append it to the end
         if not inserted:
-            list_books.append(new_book_dict)
+            book_list.append(new_book_dict)
             
-        return list_books
+        return book_list
 
 
     def add_book(self, new_book):
@@ -92,18 +99,22 @@ class BookController:
         Returns:
             None
         """
+        # 1. Verify the existence of the main file
         if self.verify_file():
         
+            # 2. Verify the existence of the ordered file and create it if necessary
             route_ordered = Path("data/books_ordered.json")
             if not route_ordered.is_file():
                 with open(route_ordered, "w") as file:
                     ordered_list = []
                     json.dump(ordered_list, file, indent=4)
 
+            # 3. Check if the book already exists
             if self.searching(new_book.isbn):
                 return print(f"The Book with ISBN {new_book.isbn} already exists.")
                 
-            format_book = {
+            # 4. Format the Book object into a dictionary
+            formatted_book = {
                 "isbn": new_book.isbn,
                 "title": new_book.title,
                 "author": new_book.author,
@@ -113,44 +124,47 @@ class BookController:
                 "reservations": []
             }
             
-            list_general = []
+            # 5. Write to the general file (books.json)
+            general_list = []
             with open("data/books.json", "r") as file:
-                list_general = json.load(file)
+                general_list = json.load(file)
                 
-            list_general.append(format_book)
+            general_list.append(formatted_book)
             
             with open("data/books.json", "w") as file:
-                json.dump(list_general, file, indent=4)
+                json.dump(general_list, file, indent=4)
                 
-            list_ordered = []
+            # 6. Write to the ordered file (books_ordered.json)
+            ordered_list = []
             with open(route_ordered, "r") as file:
-                list_ordered = json.load(file)
+                ordered_list = json.load(file)
             
-            self.order_book(list_ordered, format_book)
+            self.order_book(ordered_list, formatted_book) # Insert in order
             
             with open(route_ordered, "w") as file:
-                json.dump(list_ordered, file, indent=4)
+                json.dump(ordered_list, file, indent=4)
             
             return print(f"Book '{new_book.title}' added success.")
         
-             
+            
     def search_book(self, isbn):
         """
         Searches for a book using binary search in books_ordered.json.
-        This function is critical for loan and reservation management.
+        This function is efficient because it uses the ordered file.
 
-        Args:
-            isbn (str): ISBN code.
-
-        Returns:
-            bool: True if the book exists.
+        Args: ISBN code.
+            
+        Returns: True if the book exists and its information is printed.
         """
         if self.verify_file():
+            # First check if it exists using the linear search method (searching)
             if self.searching(isbn):
+                # If it exists, use binary search to get the full object
                 found_book = self.binary_search(isbn)
                     
                 if found_book:
                     print("This book already exists:\n")
+                    # Print the book details
                     print(f"ISBN: {found_book['isbn']}")
                     print(f"Title: {found_book['title']}")
                     print(f"Author: {found_book['author']}")
@@ -162,76 +176,83 @@ class BookController:
             else:
                 return print(f"The book with ISBN code: {isbn} does not exists.")
     
-    def searching_title(self, searching, index = 0, list_books = []):
+    def searching_title(self, search_title, index = 0, book_list = []):
         """
         Recursive linear search by exact title match.
 
         Args:
-            searching (str): Title to search.
-            index (int): Recursion index.
-            list_books (list): Loaded book list.
+            search_title (str): Title to search.
+            index (int): Recursion index (counter).
+            book_list (list): Loaded book list.
 
-        Returns:
-            bool: True if found, False otherwise.
+        Returns: True if found, False otherwise.
         """
-        if len(list_books) == 0:
+        # Load the list on the first call if it's empty
+        if len(book_list) == 0:
             with open("data/books.json", "r") as file:
-                list_books = json.load(file)
+                book_list = json.load(file)
 
-        if index >= len(list_books):
+        # Base case 1: The index exceeds the list length
+        if index >= len(book_list):
             print("Not founded book")
             return False
 
-        if list_books[index]['title'] == searching:
-            print(f"ISBN:   {list_books[index]['isbn']}") 
-            print(f"Title: {list_books[index]['title']}")
-            print(f"Author:  {list_books[index]['author']}") 
+        # Base case 2: A match is found
+        if book_list[index]['title'] == search_title:
+            print(f"ISBN:   {book_list[index]['isbn']}") 
+            print(f"Title: {book_list[index]['title']}")
+            print(f"Author:  {book_list[index]['author']}") 
             return True
             
+        # Recursive step: Call the function with the next index
         else:
-            return self.searching_title(searching, index + 1, list_books)
+            return self.searching_title(search_title, index + 1, book_list)
         
-    def searching_author(self, author, index = 0, list_books = []):
+    def searching_author(self, author, index = 0, book_list = []):
         """
-        Recursive linear search printing all books by the same author.
+        Recursive linear search that prints all books by the same author.
 
         Args:
             author (str): Author name.
             index (int): Current recursion index.
-            list_books (list): Cached list of books.
+            book_list (list): Cached list of books.
 
-        Returns:
-            None
+        Returns: None   
         """
-        if len(list_books) == 0:
+        # Load the list if it's the first call
+        if len(book_list) == 0:
             with open("data/books.json", "r") as file:
-                list_books = json.load(file)
+                book_list = json.load(file)
 
-        if index >= len(list_books):
+        # Base case: The index exceeds the list length
+        if index >= len(book_list):
             return
 
-        if list_books[index]['author'] == author:
-            print(f"ISBN:   {list_books[index]['isbn']}") 
-            print(f"Title: {list_books[index]['title']}")
-            print(f"Author:  {list_books[index]['author']}") 
+        # If there is a match, print the book
+        if book_list[index]['author'] == author:
+            print(f"ISBN:   {book_list[index]['isbn']}") 
+            print(f"Title: {book_list[index]['title']}")
+            print(f"Author:  {book_list[index]['author']}") 
             print("")
             
-        self.searching_author(author, index + 1, list_books)
+        # Recursive step: Continue searching, even if a match was found
+        self.searching_author(author, index + 1, book_list)
     
     def list_books(self):
         """
         Prints a formatted list of all books in books.json.
 
-        Returns:
-            None
+        Returns: None
         """
         if self.verify_file():
-            list_books = []
+            book_list = []
             
+            # Load the list of books
             with open("data/books.json", "r") as file:
-                list_books = json.load(file)
+                book_list = json.load(file)
                 
-            for book in list_books:
+            # Iterate and print the attributes of each book
+            for book in book_list:
                 print("")
                 print(f"ISBN: {book['isbn']}")
                 print(f"Title: {book['title']}")
@@ -245,22 +266,24 @@ class BookController:
         """
         Updates attributes of an existing book using a menu selection.
 
-        Args:
-            book (Book): Book instance (ISBN required).
-
-        Returns:
-            None
+        Args: Book instance (ISBN required for search).
+            
+        Returns: None
         """
+        # 1. Check if the book exists
         if self.searching(book.isbn):
             
-            list_books = []
+            book_list = []
             
+            # 2. Load the list of books
             with open("data/books.json", "r") as file:
-                list_books = json.load(file)
+                book_list = json.load(file)
             
-            for b in list_books:
+            # 3. Find the book by ISBN in the list
+            for b in book_list:
                 if b['isbn'] == book.isbn:
                     
+                    # 4. Show the update options menu
                     print("1) To change ISBN code")
                     print("2) To change title")
                     print("3) To change author")
@@ -269,6 +292,7 @@ class BookController:
                     print("6) To change all")
                     option = int(input("Select an option: "))
                     
+                    # 5. Update the fields based on the option
                     match option:
                         case 1:
                             new_isbn = input("Introduce the new ISBN code: ")
@@ -290,7 +314,7 @@ class BookController:
                             new_weight = input("Introduce the new weight value: ")
                             b['weight'] = new_weight
                             print(f"{b['weight']} updated")
-                        case 6:
+                        case 6: # Option to update all fields
                             new_isbn = input("Introduce the new ISBN code: ")
                             b['isbn'] = new_isbn
                             print(f"{b['isbn']} updated")
@@ -318,10 +342,11 @@ class BookController:
                         case _:
                             print("Invalid option")
                 
+                    # 6. Write the updated list back to the JSON file
                     with open("data/books.json", "w") as file:
-                        json.dump(list_books, file, indent=4)
+                        json.dump(book_list, file, indent=4)
                     
-                    break
+                    break # Exit the loop once the book is updated
                 
         else:
             return print(f"{book.title} does not exist")
@@ -330,304 +355,334 @@ class BookController:
         """
         Removes a book from books.json by ISBN.
 
-        Args:
-            isbn (str): ISBN code.
-
-        Returns:
-            None
+        Args: ISBN code.
+        
+        Returns: None
         """
         if self.verify_file():
         
-            list_books = []
+            book_list = []
+            # Load the list of books
             with open("data/books.json", "r") as file:
-                list_books = json.load(file)
+                book_list = json.load(file)
                 
             new_list = []
-            for book in list_books:
+            # Create a new list excluding the book with the matching ISBN
+            for book in book_list:
                 if book['isbn'] != isbn:
                     new_list.append(book)
                 
+            # Overwrite the file with the new list without the deleted book
             with open("data/books.json", "w") as file:
                 json.dump(new_list, file, indent=4)
                     
             return print(f"The book with ISBN code: {isbn} was deleted")
         
 
-    def merge_sort(self, list):
+    def merge_sort(self, book_list):
         """
-        Merge Sort (recursive)
+        Merge Sort Algorithm: Sorts the list of books by the 'value' attribute.
+        It's a Divide and Conquer algorithm.
 
-        Sorts the list of books by the 'value' attribute.
-
-        Args:
-            list (list): Unordered list of books.
-
-        Returns:
-            list: Sorted list.
-        """
-        if len(list) <= 1:
-            return list
-        
-        middle = len(list) // 2
-        left = list[:middle]
-        right = list[middle:]
-        
-        order_left = self.merge_sort(left)
-        order_right = self.merge_sort(right)
-        
-        return self.merge(order_left, order_right)
-    
-    def merge(self, order_left, order_right):
-        """
-        Merges two sorted lists into one sorted list.
-
-        Args:
-            order_left (list): Left sorted half.
-            order_right (list): Right sorted half.
-
-        Returns:
-            list: Merged ordered list.
-        """
-        order_list = []
-        
-        i = 0
-        j = 0
-        
-        while i < len(order_left) and j < len(order_right):
+        Args: Unordered list of books.
             
-            if order_left[i]['value'] < order_right[j]['value']:
-                order_list.append(order_left[i])
+        Returns: Sorted list.
+        """
+        # Base case of recursion: if the list has 0 or 1 element, it's already sorted
+        if len(book_list) <= 1:
+            return book_list
+        
+        # Divide the list into two halves
+        middle = len(book_list) // 2
+        left = book_list[:middle]
+        right = book_list[middle:]
+        
+        # Recursively call merge_sort to sort the halves
+        sorted_left = self.merge_sort(left)
+        sorted_right = self.merge_sort(right)
+        
+        # Merge the sorted halves
+        return self.merge(sorted_left, sorted_right)
+    
+    def merge(self, sorted_left, sorted_right):
+        """
+        Merge Sort helper function: Merges two sorted lists into one single sorted list.
+
+        Args:
+            sorted_left: Left sorted half.
+            sorted_right: Right sorted half.
+
+        Returns: Merged and ordered list.
+        """
+        merged_list = []
+        
+        i = 0 # Pointer for the left list
+        j = 0 # Pointer for the right list
+        
+        # Compare elements from both lists and add the smallest to the merged list
+        while i < len(sorted_left) and j < len(sorted_right):
+            
+            if sorted_left[i]['value'] < sorted_right[j]['value']:
+                merged_list.append(sorted_left[i])
                 i += 1
             else:
-                order_list.append(order_right[j])
+                merged_list.append(sorted_right[j])
                 j += 1
         
-        while i < len(order_left):
-            order_list.append(order_left[i])
+        # Add the remaining elements from the left list
+        while i < len(sorted_left):
+            merged_list.append(sorted_left[i])
             i += 1
             
-        while j < len(order_right):
-            order_list.append(order_right[j])
+        # Add the remaining elements from the right list
+        while j < len(sorted_right):
+            merged_list.append(sorted_right[j])
             j += 1
         
-        return order_list
+        return merged_list
     
     def value_report(self):
         """
-        Generates a complete inventory report sorted by book value.
+        Generates a complete inventory report sorted by book value
+        using Merge Sort.
         Saves the result in value_report.json.
 
-        Returns:
-            None
+        Returns: None
         """
-        list_books = []
+        book_list = []
         
+        # Load the list of books
         with open("data/books.json", "r") as file:
-            list_books = json.load(file)
+            book_list = json.load(file)
             
-        report = self.merge_sort(list_books)
+        # Apply Merge Sort on the 'value' field
+        report = self.merge_sort(book_list)
         
+        # Save the sorted report to a new JSON file
         with open("data/value_report.json", "w") as file:
             json.dump(report, file, indent=4)
             
     def binary_search(self, isbn):
         """
-        Binary Search
+        Binary Search.
 
-        Searches for a book inside books_ordered.json using ISBN as key.
+        Searches for a book inside books_ordered.json using ISBN as the key.
 
-        Args:
-            isbn (str): ISBN code.
-
-        Returns:
-            dict: Book found or None.
+        Args: ISBN code.
+            
+        Returns: The found book dictionary or None.
         """
         path = Path("data/books_ordered.json")
         
+        # Check if the ordered file exists
         if not path.is_file():
-            print("El archivo ordenado no existe.")
+            print("The ordered file does not exist.")
             return None
 
+        # Load the ordered list of books
         with open(path, "r") as file:
             ordered_list = json.load(file)
             
-        low = 0
-        high = len(ordered_list) - 1
+        low = 0 # Starting index
+        high = len(ordered_list) - 1 # Ending index
         
+        # Binary search loop
         while low <= high:
-            middle = (low + high) // 2      
+            middle = (low + high) // 2  # Calculate the middle index
             middle_book = ordered_list[middle]
             
+            # Compare the target ISBN with the ISBN of the middle book
             if middle_book['isbn'] == isbn:
-                return middle_book
+                return middle_book # Book found
             
             elif middle_book['isbn'] < isbn:
-                low = middle + 1   
+                low = middle + 1  # Discard the lower 
             else:
-                high = middle - 1   
+                high = middle - 1  # Discard the upper  )
     
-        return None
+        return None # Book not found
     
 
-    def optimizar_estanteria(self):
+    def efficient_shelving(self):
         """
-        Backtracking algorithm to find the optimal combination of 4 books that:
-        - Maximizes their total value.
-        - Does not exceed 8kg total weight.
+        Backtracking Algorithm: Finds the optimal combination of books that maximizes
+        total value without exceeding 8kg total weight.
 
-        Returns:
-            None
+        Unlike the brute-force version, this does not require choosing exactly 4 books.
+        Any number of books (1–n) can form the optimal combination.
         """
-        lista_libros = []
+        book_list = []
 
-        with open("data/books.json", "r") as archivo:
-            lista_libros = json.load(archivo)
-        
-        print("Searching")
-        
-        mejor_valor, mejores_libros = self.buscar_combinacion(lista_libros, 8, 0, 4)
+        # Load books
+        with open("data/books.json", "r") as file:
+            book_list = json.load(file)
 
-        if mejor_valor < 0:
-            print("Not found a valid combination")
+        print("Searching...")
+
+        # Backtracking call (replaces the old incorrect call)
+        best_value, best_books = self.searching_combinations(book_list, 0, 0, [])
+
+        # Print result
+        if best_value == 0:
+            print("No valid combination found.")
         else:
-            print(f"Found Total Value: ${mejor_valor}")
-            for libro in mejores_libros:
-                print(f" - {libro['title']} (${libro['value']})")
+            print(f"Best Total Value: ${best_value}")
+            for book in best_books:
+                print(f" - {book['title']} (${book['value']})")
+            print(f"Total Weight: {sum(b['weight'] for b in best_books)} kg")
 
-    def buscar_combinacion(self, libros, espacio, indice, faltan):
+
+    def searching_combinations(self, books, index, current_weight, current_list):
         """
-        Recursive Backtracking helper for optimal shelving.
+        Correct Backtracking algorithm.
 
         Args:
-            libros (list): All books.
-            espacio (float): Remaining weight.
-            indice (int): Current index.
-            faltan (int): Books still required.
+            books (list): All books.
+            index (int): Current index in the list.
+            current_weight (float): Current total weight.
+            current_list (list): Current selected books.
 
         Returns:
-            tuple: (best_value, best_combination)
+            tuple: (best_value, best_list)
         """
-        if faltan == 0:
+
+        # If weight exceeded → invalid branch
+        if current_weight > 8:
             return 0, []
 
-        if espacio <= 0 or indice >= len(libros):
-            return -999999, []
+        # If end of list → evaluate this combination
+        if index == len(books):
+            total_value = sum(b["value"] for b in current_list)
+            return total_value, current_list
 
-        libro = libros[indice]
+        current_book = books[index]
 
-        valor_no, lista_no = self.buscar_combinacion(libros, espacio, indice + 1, faltan)
+        # Option 1: DO NOT include current book
+        value_excluded, list_excluded = self.searching_combinations(
+            books, index + 1, current_weight, current_list
+        )
 
-        valor_si = -999999
-        lista_si = []
+        # Option 2: INCLUDE current book (if weight allows)
+        value_included, list_included = self.searching_combinations(
+            books,
+            index + 1,
+            current_weight + current_book["weight"],
+            current_list + [current_book]
+        )
 
-        if libro['weight'] <= espacio:
-            v_temp, l_temp = self.buscar_combinacion(libros, espacio - libro['weight'], indice + 1, faltan - 1)
-            valor_si = v_temp + libro['value']
-            lista_si = [libro] + l_temp
-
-        if valor_si > valor_no:
-            return valor_si, lista_si
+        # Return the better of the two branches
+        if value_included > value_excluded:
+            return value_included, list_included
         else:
-            return valor_no, lista_no
+            return value_excluded, list_excluded
+
         
 
     def inefficient_shelving(self):
         """
-        Brute-force search for ALL combinations of 4 books whose total 
-        weight exceeds 8kg.
+        Brute-Force Search: Finds ALL combinations of 4 books whose total 
+        weight
 
-        This algorithm checks all combinations (O(n^4)).
-
-        Returns:
-            None
+        This algorithm uses 4 nested loops to iterate over all non-repeating combinations.
         """
-        list_books = []
+        book_list = []
         
+        # Load the list of books
         with open("data/books.json", "r") as file:
-            list_books = json.load(file)
+            book_list = json.load(file)
         
         found = 0
         
-        if len(list_books) < 4:
+        if len(book_list) < 4:
             print("The list hast less than 4 books.")
             return
         
-        for i in range(len(list_books)):              
-            for j in range(i + 1, len(list_books)):   
-                for k in range(j + 1, len(list_books)): 
-                    for l in range(k + 1, len(list_books)): 
+        # Four nested loops for all combinations 
+        for i in range(len(book_list)):
+            for j in range(i + 1, len(book_list)): 
+                for k in range(j + 1, len(book_list)): 
+                    for l in range(k + 1, len(book_list)): 
                         
-                        l1 = list_books[i]
-                        l2 = list_books[j]
-                        l3 = list_books[k]
-                        l4 = list_books[l]
+                        b1 = book_list[i]
+                        b2 = book_list[j]
+                        b3 = book_list[k]
+                        b4 = book_list[l]
                         
-                        total_weight = l1['weight'] + l2['weight'] + l3['weight'] + l4['weight']
+                        # Calculate the total weight of the combination
+                        total_weight = b1['weight'] + b2['weight'] + b3['weight'] + b4['weight']
                         
+                        # Check the condition of exceeding 8kg
                         if total_weight > 8.0:
                             found += 1
                             print(f" Combinations: {found}")
-                            print(f"[{l1['title']}, {l2['title']}, {l3['title']}, {l4['title']}]")
+                            print(f"[{b1['title']}, {b2['title']}, {b3['title']}, {b4['title']}]")
                             print(f"Total Weight: {total_weight}")
                             
         if found == 0:
-            print("Any combinations its over 8.0 kg")     
+            print("Any combinations its over 8 kg") 
             
-    def author_value(self, author, index=0, list_books=[]):
+    def author_value(self, author, index=0, book_list=[]):
         """
-        Recursive stack-based function that computes the total value of all
-        books from a given author.
+        Stack-based Recursion: Computes the total value of all books by a given author.
 
-        The sum is performed during the "unwinding" phase of recursion.
+        The summation is performed during the **"unwinding"** phase of recursion (post-recursion).
 
         Args:
-            author (str): Target author.
-            index (int): Current recursion index.
-            list_books (list): Cached book list.
+            author: Target author.
+            index: Recursion index.
+            book_list: Cached book list.
 
-        Returns:
-            int: Total value of the author's collection.
+        Returns: Total value of the author's collection.
         """
-        if len(list_books) == 0:
+        # Load the list if it's the first call
+        if len(book_list) == 0:
             with open("data/books.json", "r") as file:
-                list_books = json.load(file)
+                book_list = json.load(file)
 
-        if index >= len(list_books):
+        # Base case: Index exceeds the list 
+        if index >= len(book_list):
             return 0
 
         current_value = 0
-        if list_books[index]['author'] == author:
-            current_value = list_books[index]['value']
+        # Get the current book's value if the author matches
+        if book_list[index]['author'] == author:
+            current_value = book_list[index]['value']
 
-        total_temp = self.author_value(author, index + 1, list_books)
+        # Recursive call (
+        temp_total = self.author_value(author, index + 1, book_list)
         
-        total = current_value + total_temp
+        # Summation on the unwind: Current value + value from the recursive call
+        total = current_value + temp_total
 
+        # Print the final result only on the initial call 
         if index == 0:
             print(f"The value of the collection of {author} is: ${total}")
 
         return total
     
-    def author_weight(self, author, index=0, list_books=[], current_weight=0.0, count=0):
+    def author_weight(self, author, index=0, book_list=[], current_weight=0.0, count=0):
         """
-        Tail recursion implementation that computes the average weight 
-        of all books written by a given author.
+        Tail Recursion: Computes the average weight of all books written by a given author.
+
+        The summation is performed during the **"folding"** phase by passing accumulators 
+        (current_weight, count) to the recursive call.
 
         Args:
-            author (str): Author name.
-            index (int): Current recursion index.
-            list_books (list): Cached list.
-            current_weight (float): Accumulator of all matching weights.
-            count (int): Number of matching books.
+            author: Author name.
+            index: Current recursion index.
+            book_list: Cached list.
+            current_weight (float): Accumulator for the total weight of matching books.
+            count (int): Accumulator for the number of matching books.
 
-        Returns:
-            float: Average weight of the author's books.
+        Returns: Average weight of the author's books.
         """
-        if len(list_books) == 0:
+        # Load the list if it's the first call
+        if len(book_list) == 0:
             with open("data/books.json", "r") as file:
-                list_books = json.load(file)
+                book_list = json.load(file)
 
-        if index >= len(list_books):
+        # Base case Index exceeds the list.
+        if index >= len(book_list):
             if count == 0:
                 print("Not books found")
                 return 0.0
@@ -636,8 +691,10 @@ class BookController:
             print(f"The average weight of the collection of {author} is: {average} kg")
             return average
 
-        if list_books[index]['author'] == author:
-            current_weight += list_books[index]['weight']
+        # Update the accumulators if the author matches
+        if book_list[index]['author'] == author:
+            current_weight += book_list[index]['weight']
             count += 1
 
-        return self.author_weight(author, index + 1, list_books, current_weight, count)
+        # Accumulators are passed as arguments
+        return self.author_weight(author, index + 1, book_list, current_weight, count)
